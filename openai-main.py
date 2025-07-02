@@ -13,21 +13,30 @@ def extract_text_from_pdf(pdf_path):
             page_text = page.extract_text()
             if page_text:
                 text += page_text + "\n"
+    # print(text)
     return text
 
 def parse_invoice_with_openai(invoice_text):
     prompt = (
-        "Extract the following fields from this invoice text: "
-        "Invoice Number, Invoice Date, Vendor Name, Total Amount, and Due Date. "
-        "Return the result as a JSON object.\n\n"
-        f"Invoice Text:\n{invoice_text}"
+        "Extract the following fields from this invoice text and return as a JSON object:\n"
+        "- Invoice Number\n"
+        "- Invoice Date\n"
+        "- Due Date\n"
+        "- Invoice Status (e.g. unpaid/paid)\n"
+        "- Sender Name and Email\n"
+        "- Recipient Name and Email\n"
+        "- Items (description, quantity, rate)\n"
+        "- Total Amount\n"
+        "- Memo\n\n"
+        "Invoice Text:\n"
+        f"{invoice_text}"
     )
 
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt},
         ],
         max_tokens=500,
         temperature=0,
