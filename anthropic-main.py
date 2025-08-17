@@ -9,12 +9,14 @@ client = anthropic.Anthropic(api_key=api_key)
 
 print("API Key loaded:", api_key[:12], "...")
 
+
 def extract_text_from_pdf(pdf_path):
     text = ""
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
             text += page.extract_text() + "\n"
     return text
+
 
 def parse_invoice_with_claude(invoice_text):
 
@@ -42,8 +44,9 @@ def parse_invoice_with_claude(invoice_text):
 
     return response.content[0].text
 
+
 if __name__ == "__main__":
-    pdf_path = "invoice_sample.pdf"
+    pdf_path = "samples/invoice_sample.pdf"
     invoice_text = extract_text_from_pdf(pdf_path)
     parsed_data = parse_invoice_with_claude(invoice_text)
     print(parsed_data)

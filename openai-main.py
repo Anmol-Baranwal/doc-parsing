@@ -6,6 +6,7 @@ import os
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+
 def extract_text_from_pdf(pdf_path):
     text = ""
     with pdfplumber.open(pdf_path) as pdf:
@@ -15,6 +16,7 @@ def extract_text_from_pdf(pdf_path):
                 text += page_text + "\n"
     # print(text)
     return text
+
 
 def parse_invoice_with_openai(invoice_text):
     prompt = (
@@ -43,8 +45,9 @@ def parse_invoice_with_openai(invoice_text):
     )
     return response.choices[0].message.content
 
+
 if __name__ == "__main__":
-    pdf_path = "invoice_sample.pdf"
+    pdf_path = "samples/invoice_sample.pdf"
     invoice_text = extract_text_from_pdf(pdf_path)
     parsed_data = parse_invoice_with_openai(invoice_text)
     print(parsed_data)

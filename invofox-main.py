@@ -8,7 +8,7 @@ load_dotenv()
 
 API_BASE = "https://api.invofox.com"
 API_KEY = os.getenv("INVOFOX_API_KEY")
-PDF_PATH = "invoice_sample.pdf"
+PDF_PATH = "samples/invoice_sample.pdf"
 
 headers = {"accept": "application/json", "x-api-key": API_KEY}
 
